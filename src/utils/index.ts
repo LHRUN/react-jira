@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react'
 
-export const isFalsy = (value) => (value === 0 ? false : !value)
+export const isFalsy = (value: unknown): boolean =>
+  value === 0 ? false : !value
 
-export const cleanObject = (obj) => {
+export const cleanObject = (obj: any) => {
   const result = { ...obj }
   Object.keys(result).forEach((key) => {
     const value = result[key]
@@ -14,14 +15,14 @@ export const cleanObject = (obj) => {
   return result
 }
 
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 }
 
-export const useDebounce = (value, delay) => {
+export const useDebounce = <V>(value: V, delay?: number): V => {
   const [debouncedValue, setDebouncedValue] = useState(value)
 
   useEffect(() => {
