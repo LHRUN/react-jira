@@ -3,11 +3,17 @@ import React from 'react'
 import { Form, Input } from 'antd'
 import { LongButton } from 'unauthenticated-app'
 
-export const RegisterScreen = () => {
+export const RegisterScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void
+}) => {
   const { register } = useAuth()
 
   const handleSubmit = (values: { username: string; password: string }) => {
-    register(values)
+    register(values).catch((error) => {
+      onError(error)
+    })
   }
 
   return (

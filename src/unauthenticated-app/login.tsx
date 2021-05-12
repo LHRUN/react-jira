@@ -3,11 +3,17 @@ import React from 'react'
 import { Form, Input } from 'antd'
 import { LongButton } from 'unauthenticated-app'
 
-export const LoginScreen = () => {
+export const LoginScreen = ({
+  onError,
+}: {
+  onError: (error: Error) => void
+}) => {
   const { login } = useAuth()
 
   const handleSubmit = (values: { username: string; password: string }) => {
-    login(values)
+    login(values).catch((error) => {
+      onError(error)
+    })
   }
 
   return (
