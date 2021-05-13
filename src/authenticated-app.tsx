@@ -1,4 +1,4 @@
-import { useAuth } from 'context/ahtu-context'
+import { useAuth } from 'context/auth-context'
 import { ProjectListScreen } from 'screens/project-list'
 import { Row } from 'components/lib'
 import styled from '@emotion/styled'

@@ -1,4 +1,4 @@
-import { useAuth } from 'context/ahtu-context'
+import { useAuth } from 'context/auth-context'
 import qs from 'qs'
 import * as auth from 'auth-provider'
 const apiUrl = process.env.REACT_APP_API_URL
