@@ -13,9 +13,14 @@ const defaultInitialState: State<null> = {
 }
 
 const defaultConfig = {
-  thorwOnError: false,
+  thorwOnError: false, // 是否抛出错误
 }
 
+/**
+ * @description: 异步请求
+ * @param initialState 初始化数据
+ * @param initialConfig 初始化配置
+ */
 export const useAsync = <D>(
   initialState?: State<D>,
   initialConfig?: typeof defaultConfig

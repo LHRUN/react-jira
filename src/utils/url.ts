@@ -2,6 +2,10 @@ import { cleanObject } from 'utils'
 import { useMemo, useState } from 'react'
 import { URLSearchParamsInit, useSearchParams } from 'react-router-dom'
 
+/**
+ * @description: 实时编辑url参数
+ * @returns [参数对象, 修改参数函数]
+ */
 export const useUrlQueryParam = <K extends string>(keys: K[]) => {
   const [searchParams, setSearchParam] = useSearchParams()
   const [stateKeys] = useState(keys)

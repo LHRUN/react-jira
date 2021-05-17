@@ -3,9 +3,15 @@ import { useEffect, useRef, useState } from 'react'
 export const isFalsy = (value: unknown): boolean =>
   value === 0 ? false : !value
 
+/**
+ * @description: 判断是否为空
+ */
 export const isVoid = (value: unknown) =>
   value === undefined || value === null || value === ''
 
+/**
+ * @description: 对象清除值为空的key
+ */
 export const cleanObject = (obj: { [key: string]: unknown }) => {
   const result = { ...obj }
   Object.keys(result).forEach((key) => {
@@ -18,6 +24,9 @@ export const cleanObject = (obj: { [key: string]: unknown }) => {
   return result
 }
 
+/**
+ * @description: 仿mount生命周期
+ */
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback()
@@ -25,6 +34,11 @@ export const useMount = (callback: () => void) => {
   }, [])
 }
 
+/**
+ * @description: Debounce hook
+ * @param value
+ * @param delay 间隔时间
+ */
 export const useDebounce = <V>(value: V, delay?: number): V => {
   const [debouncedValue, setDebouncedValue] = useState(value)
 
@@ -36,6 +50,11 @@ export const useDebounce = <V>(value: V, delay?: number): V => {
   return debouncedValue
 }
 
+/**
+ * @description: 替换页面标题
+ * @param title 页面标题
+ * @param keepOnUnmount 是否回退历史标题
+ */
 export const useDocumentTitle = (
   title: string,
   keepOnUnmount: boolean = true
@@ -55,4 +74,7 @@ export const useDocumentTitle = (
   }, [keepOnUnmount, oldTitle])
 }
 
+/**
+ * @description: 回退首页
+ */
 export const resetRoute = () => (window.location.href = window.location.origin)
