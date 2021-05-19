@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
+import { useMounteRef } from 'utils'
 
 interface State<D> {
   error: Error | null
@@ -31,49 +32,59 @@ export const useAsync = <D>(
     ...initialState,
   })
 
+  const mounteRef = useMounteRef()
+
   // useState直接传入函数的定义是：惰性初始化；所以要用useState保存函数，不能直接传入函数
   const [retry, setRetry] = useState(() => () => {})
 
-  const setData = (data: D) =>
-    setState({
-      data,
-      status: 'success',
-      error: null,
-    })
+  const setData = useCallback(
+    (data: D) =>
+      setState({
+        data,
+        status: 'success',
+        error: null,
+      }),
+    []
+  )
 
-  const setError = (error: Error) =>
-    setState({
-      error,
-      status: 'error',
-      data: null,
-    })
+  const setError = useCallback(
+    (error: Error) =>
+      setState({
+        error,
+        status: 'error',
+        data: null,
+      }),
+    []
+  )
 
   // 触发异步请求
-  const run = (
-    promise: Promise<D>,
-    runConfig?: { retry: () => Promise<D> }
-  ) => {
-    if (!promise || !promise.then) {
-      throw new Error('请传入Promise类型数据')
-    }
-    setRetry(() => () => {
-      if (runConfig?.retry) {
-        run(runConfig?.retry(), runConfig)
+  const run = useCallback(
+    (promise: Promise<D>, runConfig?: { retry: () => Promise<D> }) => {
+      if (!promise || !promise.then) {
+        throw new Error('请传入Promise类型数据')
       }
-    })
-    setState({ ...state, status: 'loading' })
-    return promise
-      .then((data) => {
-        setData(data)
-        return data
+      setRetry(() => () => {
+        if (runConfig?.retry) {
+          run(runConfig?.retry(), runConfig)
+        }
       })
-      .catch((error) => {
-        // catch会消化异常，如果不主动抛出，外面是接收不到异常的
-        setError(error)
-        if (config.thorwOnError) return Promise.reject(error)
-        return error
-      })
-  }
+      setState((prevState) => ({ ...prevState, status: 'loading' }))
+      return promise
+        .then((data) => {
+          if (mounteRef.current) {
+            setData(data)
+          }
+          return data
+        })
+        .catch((error) => {
+          // catch会消化异常，如果不主动抛出，外面是接收不到异常的
+          setError(error)
+          if (config.thorwOnError) return Promise.reject(error)
+          return error
+        })
+    },
+    [config.thorwOnError, mounteRef, setData, setError]
+  )
 
   return {
     isIdle: state.status === 'idle',
