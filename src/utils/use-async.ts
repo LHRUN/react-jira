@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react'
+import { useCallback, useReducer, useState } from 'react'
 import { useMounteRef } from 'utils'
 
 interface State<D> {
@@ -18,6 +18,18 @@ const defaultConfig = {
 }
 
 /**
+ * @description: 判断dispatch改变数据时是否安全
+ */
+const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
+  const mountedRef = useMounteRef()
+
+  return useCallback(
+    (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0),
+    [dispatch, mountedRef]
+  )
+}
+
+/**
  * @description: 异步请求
  * @param initialState 初始化数据
  * @param initialConfig 初始化配置
@@ -27,34 +39,38 @@ export const useAsync = <D>(
   initialConfig?: typeof defaultConfig
 ) => {
   const config = { ...defaultConfig, ...initialConfig }
-  const [state, setState] = useState({
-    ...defaultInitialState,
-    ...initialState,
-  })
+  // useState适合定义单个状态，useReducer适合定义互相影响的多个状态
+  const [state, dispatch] = useReducer(
+    (state: State<D>, action: Partial<State<D>>) => ({ ...state, ...action }),
+    {
+      ...defaultInitialState,
+      ...initialState,
+    }
+  )
 
-  const mounteRef = useMounteRef()
+  const safeDispatch = useSafeDispatch(dispatch)
 
   // useState直接传入函数的定义是：惰性初始化；所以要用useState保存函数，不能直接传入函数
   const [retry, setRetry] = useState(() => () => {})
 
   const setData = useCallback(
     (data: D) =>
-      setState({
+      safeDispatch({
         data,
         status: 'success',
         error: null,
       }),
-    []
+    [safeDispatch]
   )
 
   const setError = useCallback(
     (error: Error) =>
-      setState({
+      safeDispatch({
         error,
         status: 'error',
         data: null,
       }),
-    []
+    [safeDispatch]
   )
 
   // 触发异步请求
@@ -68,12 +84,10 @@ export const useAsync = <D>(
           run(runConfig?.retry(), runConfig)
         }
       })
-      setState((prevState) => ({ ...prevState, status: 'loading' }))
+      safeDispatch({ status: 'loading' })
       return promise
         .then((data) => {
-          if (mounteRef.current) {
-            setData(data)
-          }
+          setData(data)
           return data
         })
         .catch((error) => {
@@ -83,7 +97,7 @@ export const useAsync = <D>(
           return error
         })
     },
-    [config.thorwOnError, mounteRef, setData, setError]
+    [config.thorwOnError, safeDispatch, setData, setError]
   )
 
   return {
