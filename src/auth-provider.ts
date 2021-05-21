@@ -2,6 +2,11 @@ import { User } from './screens/project-list/search-panel'
 const apiUrl = process.env.REACT_APP_API_URL
 const localStorageKey = '__auth_provider_token__'
 
+export interface AuthForm {
+  username: string
+  password: string
+}
+
 export const getToken = () => window.localStorage.getItem(localStorageKey)
 
 export const handleUserResponse = ({ user }: { user: User }) => {
@@ -9,7 +14,7 @@ export const handleUserResponse = ({ user }: { user: User }) => {
   return user
 }
 
-export const login = (data: { username: string; password: string }) => {
+export const login = (data: AuthForm) => {
   return fetch(`${apiUrl}/login`, {
     method: 'POST',
     headers: {
@@ -25,7 +30,7 @@ export const login = (data: { username: string; password: string }) => {
   })
 }
 
-export const register = (data: { username: string; password: string }) => {
+export const register = (data: AuthForm) => {
   return fetch(`${apiUrl}/register`, {
     method: 'POST',
     headers: {

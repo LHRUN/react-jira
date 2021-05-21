@@ -1,5 +1,4 @@
 // packages
-import { useState } from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { BrowserRouter as Router } from 'react-router-dom'
 import styled from '@emotion/styled'
@@ -22,21 +21,13 @@ import { ProjectModal } from 'screens/project-list/project-modal'
 import { ProjectPopover } from 'components/project-popover'
 
 export const AuthenticatedApp = () => {
-  const [projectModalOpen, setProjectModalOpen] = useState(false)
-
   return (
     <Container>
-      <PageHeader setProjectModalOpen={setProjectModalOpen} />
-      <button onClick={() => setProjectModalOpen(true)}>dakai</button>
+      <PageHeader />
       <Main>
         <Router>
           <Routes>
-            <Route
-              path={'/projects'}
-              element={
-                <ProjectListScreen setProjectModalOpen={setProjectModalOpen} />
-              }
-            />
+            <Route path={'/projects'} element={<ProjectListScreen />} />
             <Route
               path={'/projects/:projectId/*'}
               element={<ProjectScreen />}
@@ -45,24 +36,19 @@ export const AuthenticatedApp = () => {
           </Routes>
         </Router>
       </Main>
-      <ProjectModal
-        projectModalOpen={projectModalOpen}
-        onClose={() => setProjectModalOpen(false)}
-      />
+      <ProjectModal />
     </Container>
   )
 }
 
-const PageHeader = (props: {
-  setProjectModalOpen: (isOpen: boolean) => void
-}) => {
+const PageHeader = () => {
   return (
     <Header>
       <HeaderLeft>
         <ButtonNoPadding type={'link'} onClick={resetRoute}>
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
         </ButtonNoPadding>
-        <ProjectPopover setProjectModalOpen={props.setProjectModalOpen} />
+        <ProjectPopover />
       </HeaderLeft>
       <HeaderRight>
         <User />
@@ -79,7 +65,7 @@ const User = () => {
       overlay={
         <Menu>
           <Menu.Item key={'logout'}>
-            <Button type={'link'} onClick={logout}>
+            <Button type={'link'} onClick={() => logout()}>
               登出
             </Button>
           </Menu.Item>
