@@ -19,14 +19,13 @@ export interface Project {
 
 interface ListProps extends TableProps<Project> {
   users: User[]
-  refresh?: () => void
 }
 
 export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject()
-  const { open } = useProjectModal()
-  const pinProject = (id: number) => (pin: boolean) =>
-    mutate({ id, pin }).then(props.refresh)
+  const { startEdit } = useProjectModal()
+  const pinProject = (id: number) => (pin: boolean) => mutate({ id, pin })
+  const editProject = (id: number) => () => startEdit(id)
 
   return (
     <Table
@@ -84,9 +83,15 @@ export const List = ({ users, ...props }: ListProps) => {
                 overlay={
                   <Menu>
                     <Menu.Item key={'edit'}>
-                      <ButtonNoPadding type={'link'} onClick={open}>
+                      <ButtonNoPadding
+                        type={'link'}
+                        onClick={editProject(project.id)}
+                      >
                         编辑
                       </ButtonNoPadding>
+                    </Menu.Item>
+                    <Menu.Item key={'delete'}>
+                      <ButtonNoPadding type={'link'}>删除</ButtonNoPadding>
                     </Menu.Item>
                   </Menu>
                 }

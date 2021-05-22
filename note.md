@@ -260,6 +260,11 @@ type T3 = Parameters<typeof f1>
 // }]
 ```
 
+#### 断言
+
+- as const
+- <>...
+
 ### React CSS 方案对比
 
 > react 实现 css 时并没有 vue 中的 scope 这个功能，所以为了避免样式混乱，就有了以下两种方案
@@ -286,3 +291,7 @@ rules: [
 #### css in js
 
 > css in js 不是指某一个具体的库，是指组织 css 代码的一种方式，代表库有`styled-component`和`emotion`
+
+### redux
+
+### react-query
