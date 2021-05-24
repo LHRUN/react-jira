@@ -1,15 +1,18 @@
+// packages
 import React from 'react'
+import styled from '@emotion/styled'
 
+// components
+import { Button } from 'antd'
+import { ErrorBox, Row } from 'components/lib'
 import { SearchPanel } from './search-panel'
 import { List } from './list'
 
+// utils
 import { useDebounce, useDocumentTitle } from 'utils/index'
-import styled from '@emotion/styled'
-import { Button } from 'antd'
 import { useProjects } from 'utils/project'
 import { useUsers } from 'utils/user'
 import { useProjectModal, useProjectsSearchParams } from './util'
-import { ErrorBox, Row } from 'components/lib'
 
 export const ProjectListScreen = () => {
   const { open } = useProjectModal()

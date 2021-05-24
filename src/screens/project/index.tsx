@@ -1,7 +1,9 @@
+// packages
 import React from 'react'
 import { Routes, Route, Navigate } from 'react-router'
 import { Link } from 'react-router-dom'
 
+// pages
 import { KanBanScreen } from 'screens/kanban'
 import { EpicScreen } from 'screens/epic'
 

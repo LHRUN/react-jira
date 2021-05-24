@@ -1,14 +1,20 @@
+// packages
 import React, { useState } from 'react'
-import { LoginScreen } from './login'
-import { RegisterScreen } from './register'
-import { Button, Card, Divider } from 'antd'
 import styled from '@emotion/styled'
 
+// pages
+import { LoginScreen } from './login'
+import { RegisterScreen } from './register'
+
+// components
+import { Button, Card, Divider } from 'antd'
+import { ErrorBox } from 'components/lib'
 import logo from 'assets/logo.svg'
 import left from 'assets/left.svg'
 import right from 'assets/right.svg'
+
+// utils
 import { useDocumentTitle } from 'utils'
-import { ErrorBox } from 'components/lib'
 
 export const UnauthenticatedApp = () => {
   const [isRegister, setIsRegister] = useState(false)

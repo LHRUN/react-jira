@@ -1,7 +1,12 @@
-import { useAuth } from 'context/auth-context'
+// packages
 import React from 'react'
+
+// components
 import { Form, Input } from 'antd'
 import { LongButton } from 'unauthenticated-app'
+
+// utils
+import { useAuth } from 'context/auth-context'
 import { useAsync } from 'utils/use-async'
 
 export const LoginScreen = ({

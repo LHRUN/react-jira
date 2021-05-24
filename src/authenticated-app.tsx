@@ -11,14 +11,14 @@ import { ProjectScreen } from 'screens/project'
 import { Dropdown, Menu, Button } from 'antd'
 import { Row, ButtonNoPadding } from 'components/lib'
 import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg'
+import { ProjectModal } from 'screens/project-list/project-modal'
+import { ProjectPopover } from 'components/project-popover'
 
 // context
 import { useAuth } from 'context/auth-context'
 
 // utils
 import { resetRoute } from 'utils'
-import { ProjectModal } from 'screens/project-list/project-modal'
-import { ProjectPopover } from 'components/project-popover'
 
 export const AuthenticatedApp = () => {
   return (

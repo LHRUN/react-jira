@@ -1,20 +1,29 @@
+// packages
+import React, { useEffect } from 'react'
 import styled from '@emotion/styled'
+
+// components
 import { Button, Drawer, Form, Input, Spin } from 'antd'
-import { useForm } from 'antd/lib/form/Form'
 import { ErrorBox } from 'components/lib'
 import { UserSelect } from 'components/user-select'
-import React, { useEffect } from 'react'
+
+// utils
 import { useAddProject, useEditProject } from 'utils/project'
-import { useProjectModal } from './util'
+import { useProjectModal, useProjectsQueryKey } from './util'
 
 export const ProjectModal = () => {
   const { projectModalOpen, close, editingProject, isLoading } =
     useProjectModal()
+
   const useMutateProject = editingProject ? useEditProject : useAddProject
 
-  const { mutateAsync, error, isLoading: mutateLoading } = useMutateProject()
+  const {
+    mutateAsync,
+    error,
+    isLoading: mutateLoading,
+  } = useMutateProject(useProjectsQueryKey())
 
-  const [form] = useForm()
+  const [form] = Form.useForm()
   const onFinish = (values: any) => {
     mutateAsync({ ...editingProject, ...values }).then(() => {
       form.resetFields()
@@ -24,6 +33,11 @@ export const ProjectModal = () => {
 
   const title = editingProject ? '编辑项目' : '创建项目'
 
+  const modalClose = () => {
+    form.resetFields()
+    close()
+  }
+
   useEffect(() => {
     form.setFieldsValue(editingProject)
   }, [editingProject, form])
@@ -31,7 +45,7 @@ export const ProjectModal = () => {
   return (
     <Drawer
       forceRender={true}
-      onClose={close}
+      onClose={modalClose}
       visible={projectModalOpen}
       width={'100%'}
     >
