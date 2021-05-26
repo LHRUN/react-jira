@@ -13,17 +13,9 @@ import { useDeleteProject, useEditProject } from 'utils/project'
 import { useProjectModal, useProjectsQueryKey } from './util'
 
 // interface
-import { User } from './search-panel'
+import { User } from 'types/user'
 import { Modal } from 'antd'
-
-export interface Project {
-  id: number
-  name: string
-  personId: number
-  pin: boolean
-  organization: string
-  created: number
-}
+import { Project } from 'types/project'
 
 interface ListProps extends TableProps<Project> {
   users: User[]

@@ -5,7 +5,7 @@ import {
 } from './use-optimistic-options'
 import { QueryKey, useMutation, useQuery } from 'react-query'
 import { useHttp } from 'require'
-import { Project } from 'screens/project-list/list'
+import { Project } from 'types/project'
 
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp()

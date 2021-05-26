@@ -295,3 +295,11 @@ rules: [
 ### redux
 
 ### react-query
+
+### 跨组件状态管理总结
+
+#### 状态提升/组合组件(小场面)
+
+#### react-query/swr(缓存状态)
+
+#### url/redux/context(客户端状态)
