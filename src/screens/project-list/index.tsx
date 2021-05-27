@@ -15,7 +15,7 @@ import { useUsers } from 'utils/user'
 import { useProjectModal, useProjectsSearchParams } from './util'
 
 export const ProjectListScreen = () => {
-  const { open } = useProjectModal()
+  const { startCreate } = useProjectModal()
   useDocumentTitle('项目列表', false)
 
   const [param, setParam] = useProjectsSearchParams()
@@ -26,7 +26,7 @@ export const ProjectListScreen = () => {
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        <Button onClick={open}>创建项目</Button>
+        <Button onClick={startCreate}>创建项目</Button>
       </Row>
       <SearchPanel users={users || []} param={param} setParam={setParam} />
       <ErrorBox error={error} />

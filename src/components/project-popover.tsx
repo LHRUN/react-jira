@@ -7,7 +7,7 @@ import { ButtonNoPadding } from './lib'
 
 export const ProjectPopover = () => {
   const { data: projects } = useProjects()
-  const { open } = useProjectModal()
+  const { startCreate } = useProjectModal()
   const pinnedProjects = projects?.filter((project) => project.pin)
 
   const content = (
@@ -21,7 +21,7 @@ export const ProjectPopover = () => {
         ))}
       </List>
       <Divider />
-      <ButtonNoPadding onClick={open} type={'link'}>
+      <ButtonNoPadding onClick={startCreate} type={'link'}>
         创建项目
       </ButtonNoPadding>
     </ContentContainer>

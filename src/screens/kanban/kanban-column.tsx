@@ -1,13 +1,24 @@
+// pakcages
 import React from 'react'
-import { Kanban } from 'types/kanban'
-import { useTasks } from 'utils/task'
-import { useTasksSearchParams } from './util'
+import styled from '@emotion/styled'
+
+// components
+import { Card } from 'antd'
+import { CreateTask } from './create-task'
 import taskIcon from 'assets/task.svg'
 import bugIcon from 'assets/bug.svg'
-import { useTaskTypes } from 'utils/task-type'
-import styled from '@emotion/styled'
-import { Card } from 'antd'
 
+// utils
+import { useTasks } from 'utils/task'
+import { useTasksSearchParams } from './util'
+import { useTaskTypes } from 'utils/task-type'
+
+// interface
+import { Kanban } from 'types/kanban'
+
+/**
+ * @description: 任务状态icon
+ */
 const TaskTypeIcon = ({ id }: { id: number }) => {
   const { data: taskTypes } = useTaskTypes()
   const name = taskTypes?.find((taskType) => taskType.id === id)?.name
@@ -25,18 +36,21 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
 
   return (
     <Container>
-      <h3>{kanban.name}看板</h3>
-      {tasks?.map((task) => (
-        <Card style={{ marginBottom: '0.5rem' }} key={task.id}>
-          <div>{task.name}</div>
-          <TaskTypeIcon id={task.typeId} />
-        </Card>
-      ))}
+      <h3>{kanban.name}</h3>
+      <TasksContainer>
+        {tasks?.map((task) => (
+          <Card style={{ marginBottom: '0.5rem' }} key={task.id}>
+            <div>{task.name}</div>
+            <TaskTypeIcon id={task.typeId} />
+          </Card>
+        ))}
+        <CreateTask kanbanId={kanban.id} />
+      </TasksContainer>
     </Container>
   )
 }
 
-const Container = styled.div`
+export const Container = styled.div`
   min-width: 27rem;
   border-radius: 6px;
   background-color: rgb(244, 245, 247);

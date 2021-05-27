@@ -7,6 +7,9 @@ import { QueryKey, useMutation, useQuery } from 'react-query'
 import { useHttp } from 'require'
 import { Project } from 'types/project'
 
+/**
+ * @description: 获取项目列表
+ */
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp()
 
@@ -15,6 +18,10 @@ export const useProjects = (param?: Partial<Project>) => {
   )
 }
 
+/**
+ * @description: 编辑项目
+ * @param queryKey react-query key值
+ */
 export const useEditProject = (queryKey: QueryKey) => {
   const client = useHttp()
 
@@ -28,6 +35,10 @@ export const useEditProject = (queryKey: QueryKey) => {
   )
 }
 
+/**
+ * @description: 新增项目
+ * @param queryKey react-query key值
+ */
 export const useAddProject = (queryKey: QueryKey) => {
   const client = useHttp()
 
@@ -41,6 +52,10 @@ export const useAddProject = (queryKey: QueryKey) => {
   )
 }
 
+/**
+ * @description: 删除项目
+ * @param queryKey react-query key值
+ */
 export const useDeleteProject = (queryKey: QueryKey) => {
   const client = useHttp()
 
@@ -53,6 +68,10 @@ export const useDeleteProject = (queryKey: QueryKey) => {
   )
 }
 
+/**
+ * @description: 获取单个项目
+ * @param id 项目id
+ */
 export const useProject = (id?: number) => {
   const client = useHttp()
   return useQuery<Project>(
