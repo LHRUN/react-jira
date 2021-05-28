@@ -11,12 +11,10 @@ import { AppProviders } from 'context'
 
 loadServer(() =>
   ReactDOM.render(
-    <React.StrictMode>
-      <AppProviders>
-        <DevTools />
-        <App />
-      </AppProviders>
-    </React.StrictMode>,
+    <AppProviders>
+      <DevTools />
+      <App />
+    </AppProviders>,
     document.getElementById('root')
   )
 )

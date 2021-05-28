@@ -1,3 +1,4 @@
+import { useDebounce } from 'utils/index'
 import { useCallback, useMemo } from 'react'
 import { useLocation } from 'react-router'
 import { useProject } from 'utils/project'
@@ -23,6 +24,7 @@ export const useKanbanQueryKey = () => ['kanbans', useKanbanSearchParams()]
 
 export const useTasksSearchParams = () => {
   const [param] = useUrlQueryParam(['name', 'typeId', 'processorId', 'tagId'])
+  const debounceName = useDebounce(param.name, 200)
   const projectId = useProjectIdInUrl()
 
   return useMemo(
@@ -31,12 +33,12 @@ export const useTasksSearchParams = () => {
       typeId: Number(param.typeId) || undefined,
       processorId: Number(param.processorId) || undefined,
       tagId: Number(param.tagId) || undefined,
-      name: param.tagId,
+      name: debounceName,
     }),
-    [projectId, param]
+    [projectId, param, debounceName]
   )
 }
-export const useTasksQueryKey = () => ['kanbans', useTasksSearchParams()]
+export const useTasksQueryKey = () => ['tasks', useTasksSearchParams()]
 
 export const useTasksModal = () => {
   const [{ editingTaskId }, setEditingTaskId] = useUrlQueryParam([

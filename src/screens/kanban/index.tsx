@@ -18,6 +18,7 @@ import {
   useProjectInUrl,
   useTasksSearchParams,
 } from './util'
+import { TaskModal } from './task-modal'
 
 export const KanBanScreen = () => {
   useDocumentTitle('看板列表')
@@ -36,12 +37,13 @@ export const KanBanScreen = () => {
         <Spin size={'large'} />
       ) : (
         <ColumnsContainer>
-          {kanbans?.map((kanban) => (
-            <KanbanColumn kanban={kanban} key={kanban.id} />
+          {kanbans?.map((kanban, index) => (
+            <KanbanColumn kanban={kanban} key={index} />
           ))}
           <CreateKanban />
         </ColumnsContainer>
       )}
+      <TaskModal />
     </ScreenContainer>
   )
 }

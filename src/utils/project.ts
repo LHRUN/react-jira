@@ -60,7 +60,7 @@ export const useDeleteProject = (queryKey: QueryKey) => {
   const client = useHttp()
 
   return useMutation(
-    (id: number) =>
+    ({ id }: { id: number }) =>
       client(`projects/${id}`, {
         method: 'DELETE',
       }),

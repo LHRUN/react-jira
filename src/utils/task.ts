@@ -1,7 +1,11 @@
 import { QueryKey, useMutation, useQuery } from 'react-query'
 import { useHttp } from 'require'
 import { Task } from 'types/task'
-import { useAddConfig } from './use-optimistic-options'
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from './use-optimistic-options'
 
 /**
  * @description: 获取任务列表
@@ -27,6 +31,38 @@ export const useAddTask = (queryKey: QueryKey) => {
         method: 'POST',
       }),
     useAddConfig(queryKey)
+  )
+}
+
+/**
+ * @description: 编辑任务
+ */
+export const useEditTask = (queryKey: QueryKey) => {
+  const client = useHttp()
+
+  return useMutation(
+    (params: Partial<Task>) =>
+      client(`tasks/${params.id}`, {
+        data: params,
+        method: 'PATCH',
+      }),
+    useEditConfig(queryKey)
+  )
+}
+
+/**
+ * @description: 删除看板
+ * @param queryKey react-query key值
+ */
+export const useDeleteTask = (queryKey: QueryKey) => {
+  const client = useHttp()
+
+  return useMutation(
+    ({ id }: { id: number }) =>
+      client(`tasks/${id}`, {
+        method: 'DELETE',
+      }),
+    useDeleteConfig(queryKey)
   )
 }
 

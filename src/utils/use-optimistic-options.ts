@@ -20,6 +20,7 @@ export const useConfig = (
       return { previousItems }
     },
     onError(error: any, newItem: any, context: any) {
+      console.log(error)
       queryClient.setQueryData(
         queryKey,
         (context as { previousItems: any }).previousItems
