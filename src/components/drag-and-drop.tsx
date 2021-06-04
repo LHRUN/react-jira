@@ -31,7 +31,12 @@ type DropChildProps = Partial<
 > &
   React.HTMLAttributes<HTMLDivElement>
 export const DropChild = React.forwardRef<HTMLDivElement, DropChildProps>(
-  (props, ref) => <div ref={ref} {...props} />
+  ({ children, ...props }, ref) => (
+    <div ref={ref} {...props}>
+      {children}
+      {props.provided?.placeholder}
+    </div>
+  )
 )
 
 type DragProps = Omit<DraggableProps, 'children'> & { children: ReactNode }
