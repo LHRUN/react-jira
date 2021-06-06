@@ -1,4 +1,6 @@
 import { QueryKey, useQueryClient } from 'react-query'
+import { Task } from 'types/task'
+import { reorder } from './reorder'
 
 /**
  * @description: react-query的useMutation配置，主要用于乐观更新
@@ -56,3 +58,22 @@ export const useEditConfig = (queryKey: QueryKey) =>
  */
 export const useAddConfig = (queryKey: QueryKey) =>
   useConfig(queryKey, (target, old) => (old ? [...old, target] : []))
+
+/**
+ * @description: react-query的useMutation看板重新排序配置
+ */
+export const useReorderKanbanConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => reorder({ list: old, ...target }))
+
+/**
+ * @description: react-query的useMutation任务重新排序配置
+ */
+export const useReorderTaskConfig = (queryKey: QueryKey) =>
+  useConfig(queryKey, (target, old) => {
+    const orderedList = reorder({ list: old, ...target }) as Task[]
+    return orderedList.map((item) =>
+      item.id === target.fromId
+        ? { ...item, kanbanId: target.toKanbanId }
+        : item
+    )
+  })

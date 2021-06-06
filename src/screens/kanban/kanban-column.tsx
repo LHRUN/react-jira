@@ -7,18 +7,19 @@ import { Button, Card, Dropdown, Menu, Modal } from 'antd'
 import { CreateTask } from './create-task'
 import taskIcon from 'assets/task.svg'
 import bugIcon from 'assets/bug.svg'
+import { Drag, Drop, DropChild } from 'components/drag-and-drop'
+import { Mark } from 'components/mark'
+import { Row } from 'components/lib'
 
 // utils
 import { useTasks } from 'utils/task'
 import { useKanbanQueryKey, useTasksModal, useTasksSearchParams } from './util'
 import { useTaskTypes } from 'utils/task-type'
+import { useDeleteKanban } from 'utils/kanban'
 
 // interface
 import { Kanban } from 'types/kanban'
 import { Task } from 'types/task'
-import { Mark } from 'components/mark'
-import { useDeleteKanban } from 'utils/kanban'
-import { Row } from 'components/lib'
 
 /**
  * @description: 任务状态icon
@@ -102,9 +103,25 @@ export const KanbanColumn = React.forwardRef<
         <More kanban={kanban} key={kanban.id}></More>
       </Row>
       <TasksContainer>
-        {tasks?.map((task, index) => (
-          <TaskCard key={task.id} task={task} />
-        ))}
+        <Drop
+          type={'ROW'}
+          direction={'vertical'}
+          droppableId={String(kanban.id)}
+        >
+          <DropChild style={{ minHeight: '5px' }}>
+            {tasks?.map((task, taskIndex) => (
+              <Drag
+                key={task.id}
+                index={taskIndex}
+                draggableId={'task' + task.id}
+              >
+                <div>
+                  <TaskCard key={task.id} task={task} />
+                </div>
+              </Drag>
+            ))}
+          </DropChild>
+        </Drop>
         <CreateTask kanbanId={kanban.id} />
       </TasksContainer>
     </Container>
