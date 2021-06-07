@@ -1,18 +1,11 @@
-import { User } from 'types/user'
 import { useHttp } from 'require'
-import { useMount } from 'utils'
-import { useAsync } from './use-async'
+import { User } from 'types/user'
+import { useQuery } from 'react-query'
 
-/**
- * @description: 获取负责人数组
- */
-export const useUsers = () => {
-  const { run, ...result } = useAsync<User[]>()
+export const useUsers = (param?: Partial<User>) => {
   const client = useHttp()
 
-  useMount(() => {
-    run(client('users'))
-  })
-
-  return result
+  return useQuery<User[]>(['users', param], () =>
+    client('users', { data: param })
+  )
 }

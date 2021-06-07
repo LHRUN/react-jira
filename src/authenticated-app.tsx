@@ -13,6 +13,7 @@ import { Row, ButtonNoPadding } from 'components/lib'
 import { ReactComponent as SoftwareLogo } from 'assets/software-logo.svg'
 import { ProjectModal } from 'screens/project-list/project-modal'
 import { ProjectPopover } from 'components/project-popover'
+import { UserPopover } from 'components/user-popover'
 
 // context
 import { useAuth } from 'context/auth-context'
@@ -49,6 +50,7 @@ const PageHeader = () => {
           <SoftwareLogo width={'18rem'} color={'rgb(38, 132, 255)'} />
         </ButtonNoPadding>
         <ProjectPopover />
+        <UserPopover />
       </HeaderLeft>
       <HeaderRight>
         <User />
