@@ -12,7 +12,7 @@ import { Pin } from 'components/pin'
 import { useDeleteProject, useEditProject } from 'utils/project'
 import { useProjectModal, useProjectsQueryKey } from './util'
 
-// interface
+// types
 import { User } from 'types/user'
 import { Modal } from 'antd'
 import { Project } from 'types/project'

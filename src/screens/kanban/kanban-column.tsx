@@ -17,7 +17,7 @@ import { useKanbanQueryKey, useTasksModal, useTasksSearchParams } from './util'
 import { useTaskTypes } from 'utils/task-type'
 import { useDeleteKanban } from 'utils/kanban'
 
-// interface
+// types
 import { Kanban } from 'types/kanban'
 import { Task } from 'types/task'
 

@@ -5,7 +5,7 @@ import React from 'react'
 import { Input, Form } from 'antd'
 import { UserSelect } from 'components/user-select'
 
-// interface
+// types
 import { Project } from 'types/project'
 import { User } from 'types/user'
 
