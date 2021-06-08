@@ -21,7 +21,8 @@ import { useAuth } from 'context/auth-context'
 // utils
 import { resetRoute } from 'utils'
 
-export const AuthenticatedApp = () => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => {
   return (
     <Container>
       <Router>

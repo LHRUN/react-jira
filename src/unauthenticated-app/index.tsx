@@ -16,7 +16,8 @@ import right from 'assets/right.svg'
 // utils
 import { useDocumentTitle } from 'utils'
 
-export const UnauthenticatedApp = () => {
+// eslint-disable-next-line import/no-anonymous-default-export
+export default () => {
   const [isRegister, setIsRegister] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
