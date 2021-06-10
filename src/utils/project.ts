@@ -1,3 +1,4 @@
+import { cleanObject } from './index'
 import {
   useEditConfig,
   useAddConfig,
@@ -13,7 +14,7 @@ import { Project } from 'types/project'
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp()
 
-  return useQuery<Project[], Error>(['projects', param], () =>
+  return useQuery<Project[], Error>(['projects', cleanObject(param)], () =>
     client('projects', { data: param })
   )
 }

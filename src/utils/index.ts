@@ -12,7 +12,10 @@ export const isVoid = (value: unknown) =>
 /**
  * @description: 对象清除值为空的key
  */
-export const cleanObject = (obj: { [key: string]: unknown }) => {
+export const cleanObject = (obj?: { [key: string]: unknown }) => {
+  if (!obj) {
+    return {}
+  }
   const result = { ...obj }
   Object.keys(result).forEach((key) => {
     const value = result[key]

@@ -1,6 +1,5 @@
 // packages
 import { Routes, Route, Navigate } from 'react-router'
-import { BrowserRouter as Router } from 'react-router-dom'
 import styled from '@emotion/styled'
 
 // pages
@@ -25,20 +24,15 @@ import { resetRoute } from 'utils'
 export default () => {
   return (
     <Container>
-      <Router>
-        <PageHeader />
-        <Main>
-          <Routes>
-            <Route path={'/projects'} element={<ProjectListScreen />} />
-            <Route
-              path={'/projects/:projectId/*'}
-              element={<ProjectScreen />}
-            />
-            <Navigate to={'/projects'} />
-          </Routes>
-        </Main>
-        <ProjectModal />
-      </Router>
+      <PageHeader />
+      <Main>
+        <Routes>
+          <Route path={'/projects'} element={<ProjectListScreen />} />
+          <Route path={'/projects/:projectId/*'} element={<ProjectScreen />} />
+          <Navigate to={'/projects'} />
+        </Routes>
+      </Main>
+      <ProjectModal />
     </Container>
   )
 }
