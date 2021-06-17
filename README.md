@@ -1,5 +1,9 @@
 # react-jira
 
+- 技术栈 `React` + `Typescript` + `react-query`
+- 全局状态采用的是 `context` + url 方案，服务器状态采用的`react-query`状态库
+- CSS 方案采用的是 CSS in JS 库`emotion`
+
 ## 项目目录
 
 ```js
@@ -10,30 +14,20 @@
 │  .prettierrc.json  // prettier配置文件
 │  commitlint.config.js  // commitlint配置文件
 │  craco.config.js  // 修改antd默认配置
-│  note.md  // 学习记录
 │  README.md  // 项目描述
 │  tsconfig.json  // ts配置文件
 │
 ├─.husky
 │
 ├─public
-│      favicon.ico
-│      index.html  // 主html文件
-│      logo192.png
-│      logo512.png
 │      manifest.json  // PWA 移动APP配置文件，用于指定应用的显示名称、图标、入口页面等信息
 │      mockServiceWorker.js  // Mock Service Worker
-│      robots.txt  // 针对搜索引擎的配置
 │
 └─src
-    │  App.css
-    │  App.test.tsx
     │  App.tsx
     │  auth-provider.ts  // 登录、注册等认证封装
     │  authenticated-app.tsx  // 登录后的页面
-    │  index.css
     │  index.tsx  // 入口文件
-    │  logo.svg
     │  react-app-env.d.ts  // 引入提前定义好的类型声明文件
     │  reportWebVitals.ts  // 埋点上报
     │  require.ts  // 封装fetch请求
@@ -42,7 +36,7 @@
     │
     ├─assets  // 静态文件
     │
-    ├─components
+    ├─components // 组件文件
     │      error-boundary.tsx  // 错误边界组件
     │      lib.tsx  // 公共组件
     │
@@ -64,10 +58,5 @@
     │      login.tsx
     │      register.tsx
     │
-    └─utils
-            index.ts
-            project.ts
-            url.ts
-            use-async.ts
-            user.ts
+    └─utils // 工具文件及各模块的query请求处理
 ```
